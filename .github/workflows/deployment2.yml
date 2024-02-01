@@ -1,0 +1,42 @@
+name: Deployment Exercice 2
+on: push
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get code
+      uses: actions/checkout@v3
+    - name: Install Yarn
+      run: npm install -g yarn
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Lint
+      run: yarn lint
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get code
+      uses: actions/checkout@v3
+    - name: Install Yarn
+      run: npm install -g yarn
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Test code
+      run: yarn test
+  deploy:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Get code
+      uses: actions/checkout@v3
+    - name: Install Yarn
+      run: npm install -g yarn
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Build
+      run: yarn build
+    - name: Deploy
+      run: |
+        echo "Deploying to production"
+        echo "Deployed!"
