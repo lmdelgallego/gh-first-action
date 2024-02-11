@@ -1,0 +1,22 @@
+name: Event Demo 1
+on:
+  pull_request:
+    types:
+      - opened
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output event data
+        run: echo "${{ toJson(github.event) }}"
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile // or npm ci
+      - name: Test Code
+        run: yarn test // or npm test
+      - name: Build Code
+        run: yarn build // or npm run build
+      - name: Deploy Code
+        run: echo "Deploying code"
