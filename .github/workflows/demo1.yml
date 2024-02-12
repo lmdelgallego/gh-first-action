@@ -3,8 +3,20 @@ on:
   pull_request:
     types:
       - opened
-      - edited
+    branches:
+      - main
+      - 'dev-*' # dev-new, dev-old
+      - 'feat/**' # feat/feature-1, feat/feature-2
+      # developer-1 is'n allowed to push to main
   workflow_dispatch:
+  push:
+    branches:
+      - main
+      - 'dev-*' # dev-new, dev-old
+      - 'feat/**' # feat/feature-1, feat/feature-2
+      # developer-1 is'n allowed to push to main
+    paths-ignore:
+      - '.github/workflows/**' # ignore changes to workflows
 jobs:
   deploy:
     runs-on: ubuntu-latest
